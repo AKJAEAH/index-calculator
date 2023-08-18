@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Hesap Makinesi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    #container {
+      width: 320px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    #display {
+      font-size: 32px;
+      color: #fff;
+      background-color: #222;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      text-align: right;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+    }
+    .button {
+      padding: 15px;
+      font-size: 18px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button class="button" onclick="clearDisplay()">C</button>
+      <button class="button" onclick="appendText('7')">7</button>
+      <button class="button" onclick="appendText('8')">8</button>
+      <button class="button" onclick="appendText('9')">9</button>
+      <button class="button" onclick="appendText('4')">4</button>
+      <button class="button" onclick="appendText('5')">5</button>
+      <button class="button" onclick="appendText('6')">6</button>
+      <button class="button" onclick="appendText('1')">1</button>
+      <button class="button" onclick="appendText('2')">2</button>
+      <button class="button" onclick="appendText('3')">3</button>
+      <button class="button" onclick="appendText('0')">0</button>
+      <button class="button" onclick="appendText('.')">.</button>
+      <button class="button" onclick="appendOperator('+')">+</button>
+      <button class="button" onclick="appendOperator('-')">-</button>
+      <button class="button" onclick="appendOperator('*')">*</button>
+      <button class="button" onclick="appendOperator('/')">/</button>
+      <button class="button" onclick="calculate()">=</button>
+      <button class="button" onclick="calculateSquareRoot()">√</button>
+      <button class="button" onclick="calculateSquare()">x²</button>
+      <button class="button" onclick="calculateInverse()">1/x</button>
+      <button class="button" onclick="calculatePercentage()">%</button>
+      <button class="button" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById("display");
+    let currentExpression = "";
+    let isDarkTheme = false;
+
+    function clearDisplay() {
+      currentExpression = "";
+      display.value = "";
+    }
+
+    function appendText(text) {
+      currentExpression += text;
+      display.value = currentExpression;
+    }
+
+    function appendOperator(operator) {
+      currentExpression += " " + operator + " ";
+      display.value = currentExpression;
+    }
+
+    function calculate() {
+      try {
+        currentExpression = eval(currentExpression).toString();
+        display.value = currentExpression;
+      } catch (error) {
+        display.value = "Error";
+      }
+    }
+
+    function calculateSquareRoot() {
+      try {
+        currentExpression = Math.sqrt(eval(currentExpression)).toString();
+        display.value = currentExpression;
+      } catch (error) {
+        display.value = "Error";
+      }
+    }
+
+    function calculateSquare() {
+      try {
+        currentExpression = Math.pow(eval(currentExpression), 2).toString();
+        display.value = currentExpression;
+      } catch (error) {
+        display.value = "Error";
+      }
+    }
+
+    function calculateInverse() {
+      try {
+        currentExpression = (1 / eval(currentExpression)).toString();
+        display.value = currentExpression;
+      } catch (error) {
+        display.value = "Error";
+      }
+    }
+
+    function calculatePercentage() {
+      try {
+        currentExpression = (eval(currentExpression) / 100).toString();
+        display.value = currentExpression;
+      } catch (error) {
+        display.value = "Error";
+      }
+    }
+
+    function toggleTheme() {
+      isDarkTheme = !isDarkTheme;
+      if (isDarkTheme) {
+        document.body.style.backgroundColor = "#222";
+        document.body.style.color = "#fff";
+      } else {
+        document.body.style.backgroundColor = "#f3f3f3";
+        document.body.style.color = "#000";
+      }
+    }
+  </script>
+</body>
+</html>
